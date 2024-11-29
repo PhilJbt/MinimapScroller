@@ -3,17 +3,17 @@ body {
 	padding: 20px;
 	background: black;
 	color: white;
-	font-size: 20px;
+	font-size: 17px;
+	width: 340px;
 }
 
 .container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;	
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-content: center;
+	justify-content: center;
+	align-items: center;
 }
 
 .onoffswitch {

@@ -1,14 +1,41 @@
 #dom-minimap-container {
 	pointer-events: none;
   position: fixed;
-  top: 0;
-  right: 0;
-  width: 200px;
-  height: 100%;
-  overflow-y: scroll;
+  top: 0px;
+  right: -101px;
+  width: 100px;
+  height: calc(100vh - 0px);
+  overflow: hidden;
   background: rgba(0, 0, 0, 0.5);
   z-index: 10000;
   background-color: transparent;
+	outline: #8B0000 1px solid;
+	transition: right 0.125s ease;
+}
+#languette {
+	background-color: #8B0000;
+  position: fixed;
+  right: 0px;
+  top: calc(50% - 15%);
+  height: 15%;
+  width: 20px;
+  border-radius: 7px 0px 0px 7px;
+  z-index: 10000;
+	
+	writing-mode: vertical-rl;
+  text-orientation: mixed;
+	
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  color: #ff9e9e;
+}
+#dom-minimap-container:hover, #languette:hover + #dom-minimap-container {
+	right: 0px;
 }
 
 #dom-minimap, #dom-scrollbox {
@@ -16,10 +43,9 @@
   height: 100%;
 	pointer-events: auto;
 }
+#dom-minimap {
+	
+}
 #dom-scrollbox {
 	position: absolute;
-}
-
-#dom-button-hide {
-	pointer-events: auto;
 }

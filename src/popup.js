@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 	&& url.protocol !== 'http:') {
 		document.getElementById('toggle').removeAttribute('checked');
 		document.getElementById('toggle').setAttribute('disabled', '');
-		document.getElementById('hostname').innerHTML = url;
 	}
 	else {
 		const updateIcon = (isStored) => {
@@ -34,8 +33,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 				if (isStored) {
 					blockedHosts = blockedHosts.filter((host) => host !== hostname);
+					chrome.runtime.sendMessage({ action: "add_map" });
 				} else {
 					blockedHosts.push(hostname);
+					chrome.runtime.sendMessage({ action: "rem_map" });
 				}
 
 				chrome.storage.sync.set({ blockedHosts }, () => {
