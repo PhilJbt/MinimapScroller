@@ -1,0 +1,79 @@
+body {
+	margin: 0px;
+	padding: 20px;
+	background: black;
+	color: white;
+	font-size: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;	
+}
+
+.onoffswitch {
+	position: relative; width: 86px;
+	-webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+	position: absolute;
+	opacity: 0;
+	pointer-events: none;
+}
+.onoffswitch-label {
+	display: block; overflow: hidden; cursor: pointer;
+	border: 2px solid #999999; border-radius: 50px;
+}
+.onoffswitch-inner {
+	display: block; width: 200%; margin-left: -100%;
+	transition: margin 0.125s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+	display: block; float: left; width: 50%; height: 24px; padding: 0; line-height: 24px;
+	font-size: 18px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+	box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+	content: "ON";
+	padding-left: 14px;
+	background-color: #1CE889; color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+	content: "OFF";
+	padding-right: 14px;
+	background-color: #DE1F1F; color: #FFFFFF;
+	text-align: right;
+}
+.onoffswitch-switch {
+	display: block; width: 23px; margin: 0.5px;
+	background: #FFFFFF;
+	position: absolute; top: 0; bottom: 0;
+	right: 58px;
+	border: 2px solid #999999; border-radius: 50px;
+	transition: all 0.125s ease-in 0s; 
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+	margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+	right: 0px; 
+}
+
+
+#toggle:disabled ~ label.onoffswitch-label {
+  border: 2px solid #888888;
+}
+#toggle:disabled ~ .onoffswitch-label .onoffswitch-inner:before {
+	background-color: #58a27f; color: #cccccc;
+}
+#toggle:disabled ~ .onoffswitch-label .onoffswitch-inner:after {
+	background-color: #9e4c4c; color: #cccccc;
+}
+#toggle:disabled ~ .onoffswitch-label {
+	cursor: not-allowed;
+}

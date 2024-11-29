@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "DOM Minimap",
+  "version": "1.0",
+  "description": "Displays a scrollable minimap of the DOM on the right side of the page.",
+  "permissions": ["scripting", "tabs", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "img/icon128.png"
+  },
+  "icons": {
+    "16": "img/icon16.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["style.css"]
+    }
+  ]
+}
