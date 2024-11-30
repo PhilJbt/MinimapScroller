@@ -59,7 +59,7 @@ The rendering is automatically updated when important elements change on the web
 
 3. **Minimized**
 
-Thanks to the strip, open the mini card only when you need it.
+Thanks to the strip, open the mini map only when you need it.
 
 
 
