@@ -7,7 +7,7 @@
   height: calc(100vh - 0px);
   overflow: hidden;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  z-index: 2000;
   background-color: transparent;
 	outline: #8B0000 1px solid;
 	transition: right 0.125s ease;
@@ -20,7 +20,7 @@
   height: 15%;
   width: 20px;
   border-radius: 7px 0px 0px 7px;
-  z-index: 950;
+  z-index: 1999;
 	
 	writing-mode: vertical-rl;
   text-orientation: mixed;
