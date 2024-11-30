@@ -6,10 +6,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         chrome.scripting.executeScript({
           target: { tabId },
           func: () => {
-						if (document.body.contains(document.getElementById('dom-minimap-container'))) {
-							document.getElementById('dom-minimap-container').remove();
-							document.getElementById('languette').remove();
-						}
+						desinit();
           },
         });
       }
@@ -22,9 +19,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         chrome.scripting.executeScript({
           target: { tabId },
           func: () => {
-						if (!document.body.contains(document.getElementById('dom-minimap-container'))) {
-							init();
-						}
+						init();
           },
         });
       }

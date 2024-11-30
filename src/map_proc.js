@@ -1,8 +1,13 @@
+let observer = null;
+
 function init() {
+	if (document.body.contains(document.getElementById('dom-minimap-container')))
+		return;
+		
 	let renderTimeout = null;
 	let lastRenderTime = 0;
 	let renderUID = 0;
-
+	
 	// Add languette
 	const languette = document.createElement('div');
 	languette.id = 'languette';
@@ -69,6 +74,9 @@ function init() {
 		canvasm.height = window.innerHeight;
 
 		ctxm.clearRect(0, 0, canvasm.width, canvasm.height);
+		
+		ctxm.fillStyle = "white";
+		ctxm.fillRect(0, 0, canvasm.width, canvasm.height);
 
 		// Calculate the vertical scaling factor
 		const verticalScaleM = canvasm.height / document.body.scrollHeight;
@@ -90,14 +98,16 @@ function init() {
 			let bgColor = arrStyle.backgroundColor;
 			bgColor = (bgColor && bgColor !== 'rgba(0, 0, 0, 0)' ? bgColor : undefined);
 			
-			if (isVisible(element)) {
+			if (isVisible(element)
+				&& arrStyle.position !== 'fixed'
+				&& width !== 0
+				&& height !== 0) {
 				if (element.tagName === 'A'
 				|| element.tagName === 'P') {
 					ctxm.fillStyle = arrStyle.color;
 					ctxm.fillRect(x, y, width, height);
 				}
-				else if (width !== 0 && height !== 0
-				 && (bgColor !== undefined)
+				else if (bgColor !== undefined
 				 && element.nodeType === 1) { // === Node.ELEMENT_NODE
 					ctxm.fillStyle = bgColor;
 					ctxm.fillRect(x, y, width, height);
@@ -151,26 +161,40 @@ function init() {
 	canvass.addEventListener('mousemove', handleMouseMove);
 	canvass.addEventListener('mouseup', handleMouseUp);
 	canvass.addEventListener('mouseleave', handleMouseUp);
+	document.getElementById('languette').addEventListener('mouseenter', function (e) {
+		scheduleRender(true);
+	});
 
 	// Schedule render based on DOM mutation
-	const scheduleRender = () => {
-		if (Date.now() - lastRenderTime < 2000) {
-			if (renderTimeout !== null) {
+	const scheduleRender = (_force = false) => {
+		const mmCont = document.getElementById('dom-minimap-container');
+		
+		if (mmCont) {
+			const mmStyle = window.getComputedStyle(mmCont, null);
+			const arrStyle = mmCont.currentStyle || mmStyle;
+			
+			if (Date.now() - lastRenderTime < 2000) {
+				if (renderTimeout !== null) {
+					clearTimeout(renderTimeout);
+					renderTimeout = setTimeout(() => {
+						if (_force
+						|| parseInt(arrStyle.right) > -101) {
+							renderMinimap();
+							lastRenderTime = Date.now();
+						}
+					}, 2000);
+				}
+			} else if (_force
+			|| parseInt(arrStyle.right) > -101) {
 				clearTimeout(renderTimeout);
-				renderTimeout = setTimeout(() => {
-					renderMinimap();
-					lastRenderTime = Date.now();
-				}, 2000);
+				renderMinimap();
+				lastRenderTime = Date.now();
 			}
-		} else {
-			clearTimeout(renderTimeout);
-			renderMinimap();
-			lastRenderTime = Date.now();
 		}
 	};
 
 	// Observe DOM changes
-	const observer = new MutationObserver((e) => {
+	observer = new MutationObserver((e) => {
 		e.forEach(elm => {
 			if ((elm.type === 'childList' || elm.attributeName === 'style')
 			&& elm.target.id !== 'dom-minimap'
@@ -178,10 +202,10 @@ function init() {
 			&& elm.target.id !== 'dom-minimap-container'
 			&& elm.target.id !== 'dom-button-hide') {
 				scheduleRender();
+				renderScrollbox();
 				return;
 			}
 		});
-		renderScrollbox();
 	});
 	observer.observe(document.body, { childList: true, subtree: true, attributes: false });
 
@@ -194,10 +218,12 @@ function init() {
 	window.addEventListener('resize', () => {
 		scheduleRender();
 	});
+}
 
-	// Initial render
-	setTimeout(() => {
-		renderMinimap();
-		lastRenderTime = Date.now();
-	}, 1000);
+function desinit() {
+	if (document.body.contains(document.getElementById('dom-minimap-container'))) {
+		document.getElementById('dom-minimap-container').remove();
+		document.getElementById('languette').remove();
+		observer.disconnect();
+	}
 }
