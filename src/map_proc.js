@@ -143,6 +143,7 @@ function init() {
 
 	// Handle drag scrolling
 	const handleMouseDown = (event) => {
+		document.getElementById("dom-minimap-container").style.cursor = "grabbing";
 		isDragging = true;
 		scrollToPosition(event);
 	};
@@ -153,6 +154,7 @@ function init() {
 	};
 
 	const handleMouseUp = () => {
+		document.getElementById("dom-minimap-container").style.cursor = "grab";
 		isDragging = false;
 	};
 

@@ -7,10 +7,11 @@
   height: calc(100vh - 0px);
   overflow: hidden;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 2000;
+  z-index: 15000;
   background-color: transparent;
 	outline: #8B0000 1px solid;
 	transition: right 0.125s ease;
+	cursor: grab;
 }
 #languette {
 	background-color: #8B0000;
@@ -20,7 +21,7 @@
   height: 15%;
   width: 20px;
   border-radius: 7px 0px 0px 7px;
-  z-index: 1999;
+  z-index: 14000;
 	
 	writing-mode: vertical-rl;
   text-orientation: mixed;
@@ -33,6 +34,8 @@
   align-items: center;
   font-size: 13px;
   color: #ff9e9e;
+	
+	cursor: pointer;
 }
 #dom-minimap-container:hover, #languette:hover + #dom-minimap-container {
 	right: 0px;
